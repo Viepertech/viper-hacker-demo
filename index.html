@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacker Terminal</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: limegreen;
+      font-family: monospace;
+      padding: 20px;
+    }
+    #terminal {
+      white-space: pre-wrap;
+      height: 90vh;
+      overflow-y: auto;
+    }
+    #inputLine {
+      display: inline;
+    }
+    input {
+      background: black;
+      border: none;
+      color: limegreen;
+      font-family: monospace;
+      font-size: 1em;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <div id="inputLine">
+    <span>&gt;</span>
+    <input id="commandInput" autofocus autocomplete="off">
+  </div>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('commandInput');
+    const API_BASE = 'https://viper-hacker-demo-production.up.railway.app'; // replace with railway app
+
+    const print = (text) => {
+      terminal.innerHTML += `\n${text}`;
+      terminal.scrollTop = terminal.scrollHeight;
+    };
+
+    const handleCommand = async (cmd) => {
+      if (!cmd) return;
+      print(`> ${cmd}`);
+      const [base, ...args] = cmd.split(' ');
+
+      if (base === 'clear') {
+        terminal.innerHTML = '';
+        return;
+      }
+
+      let url = `${API_BASE}/${base}`;
+      if (base === 'ascii' && args.length) {
+        url += `?text=${encodeURIComponent(args.join(' '))}`;
+      }
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Bad response');
+        const data = await res.json();
+        data.response.forEach(line => print(line));
+      } catch (err) {
+        print('[error] Unable to reach backend or invalid command.');
+      }
+    };
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = input.value.trim();
+        input.value = '';
+        handleCommand(cmd);
+      }
+    });
+
+    print('Welcome to the Viper Hacker Terminal! Type "help" to begin.');
+  </script>
+</body>
+</html>
