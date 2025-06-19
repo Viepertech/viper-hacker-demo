@@ -11,14 +11,14 @@
 
 ## Live Demo
 
-- **Frontend (GitLab Pages):** [https://your-username.gitlab.io/your-project-name](#)  
+- **Frontend (GitLab Pages):** [https://viepertech.github.io/viper-hacker-demo](https://viepertech.github.io/viper-hacker-demo/)
 - **Backend (Railway API):** [https://viper-hacker-demo-production.up.railway.app/api/command/help](https://viper-hacker-demo-production.up.railway.app/api/command/help)
 
 ---
 
 ## What Is This?
 
-A retro-style hacker terminal built with:
+A hacker terminal built with:
 
 - Node.js + Express backend (API for commands)
 - HTML/CSS/JavaScript frontend (terminal emulator)
