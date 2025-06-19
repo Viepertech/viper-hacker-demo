@@ -7,14 +7,13 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
 ![Railway](https://img.shields.io/badge/Railway-0B0D0E?style=flat&logo=railway&logoColor=white)
 
----
 
 ## Live Demo
 
 - **Frontend (GitLab Pages):** [https://viepertech.github.io/viper-hacker-demo](https://viepertech.github.io/viper-hacker-demo/)
 - **Backend (Railway API):** [https://viper-hacker-demo-production.up.railway.app/api/command/help](https://viper-hacker-demo-production.up.railway.app/api/command/help)
 
----
+
 
 ## What Is This?
 
@@ -24,7 +23,7 @@ A hacker terminal built with:
 - HTML/CSS/JavaScript frontend (terminal emulator)
 - Hosted on Railway (backend) and GitLab Pages (frontend)
 
----
+
 
 ## Supported Commands
 
@@ -37,7 +36,7 @@ A hacker terminal built with:
 | `whoami`       | Returns a fun hacker alias             |
 | `clear`        | Clears the terminal output             |
 
----
+
 
 ## Tech Stack
 
@@ -45,7 +44,7 @@ A hacker terminal built with:
 - **Backend:** Node.js, Express.js, figlet, CORS
 - **Hosting:** Railway (backend), GitLab Pages (frontend)
 
----
+
 
 ## Getting Started
 
