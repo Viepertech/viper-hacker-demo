@@ -56,3 +56,6 @@ A hacker terminal built with:
    npm install
    node index.js
    ```
+## Gitlab Workflows
+
+- ![Backend Healthcheck](https://github.com/Viepertech/viper-hacker-terminal/actions/workflows/backend-healthcheck.yml/badge.svg)
