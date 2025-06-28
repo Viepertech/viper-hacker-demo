@@ -58,4 +58,4 @@ A hacker terminal built with:
    ```
 ## Gitlab Workflows
 
-- ![Backend Healthcheck](https://github.com/Viepertech/viper-hacker-terminal/actions/workflows/backend-healthcheck.yml/badge.svg)
+- ![Backend Healthcheck](https://github.com/Viepertech/viper-hacker-demo/actions/workflows/backend-healthcheck.yml/badge.svg)
