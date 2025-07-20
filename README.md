@@ -10,6 +10,8 @@
 
 ## Live Demo
 
+**Note:** this is currently disabled, thinking of re-architecting this. 
+
 - **Frontend (GitLab Pages):** [https://viepertech.github.io/viper-hacker-demo](https://viepertech.github.io/viper-hacker-demo/)
 - **Backend (Railway API):** [https://viper-hacker-demo-production.up.railway.app/api/command/help](https://viper-hacker-demo-production.up.railway.app/api/command/help)
 
