@@ -41,8 +41,11 @@
     const terminal = document.getElementById('terminal');
     const input = document.getElementById('commandInput');
     //const API_BASE = 'https://viper-hacker-demo-production.up.railway.app/api/command';
-    const API_BASE = '/api/command';
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
+    const API_BASE = './api/command'; // resolves to /<repo>/api/command on GitHub Pages
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js?v=3', { scope: './' });
+      navigator.serviceWorker.ready.then(r => console.log('SW scope:', r.scope));
+    }
 
     const print = (text) => {
       terminal.innerHTML += `\n${text}`;
