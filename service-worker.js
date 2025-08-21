@@ -5,6 +5,7 @@ importScripts('https://unpkg.com/figlet/umd/figlet.min.js');
 importScripts('./api/command/help.js');
 importScripts('./api/command/ping.js');
 importScripts('./api/command/ascii.js');
+importScripts('./api/command/fortune.js');
 importScripts('./api/command/whoami.js');
 
 self.addEventListener('install', () => self.skipWaiting());
@@ -23,6 +24,7 @@ self.addEventListener('fetch', (event) => {
       if (path === '/api/command/help')        return json(self.handleHelp());
       if (path === '/api/command/ping')        return json(self.handlePing());
       if (path === '/api/command/ascii')       return json(await self.handleAscii(url.searchParams.get('text')));
+      if (path === '/api/command/fortune')     return json(self.handleFortune());
       if (path === '/api/command/whoami')      return json(self.handleWhoami());
       return json({ error: 'Not found' }, 404);
     } catch (e) {
