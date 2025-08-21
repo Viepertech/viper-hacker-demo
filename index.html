@@ -40,7 +40,9 @@
   <script>
     const terminal = document.getElementById('terminal');
     const input = document.getElementById('commandInput');
-    const API_BASE = 'https://viper-hacker-demo-production.up.railway.app/api/command';
+    //const API_BASE = 'https://viper-hacker-demo-production.up.railway.app/api/command';
+    const API_BASE = '/api/command';
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
 
     const print = (text) => {
       terminal.innerHTML += `\n${text}`;
