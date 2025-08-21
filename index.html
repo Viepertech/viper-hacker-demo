@@ -37,55 +37,59 @@
     <input id="commandInput" autofocus autocomplete="off">
   </div>
 
-  <script>
-    const terminal = document.getElementById('terminal');
-    const input = document.getElementById('commandInput');
-    //const API_BASE = 'https://viper-hacker-demo-production.up.railway.app/api/command';
-    const API_BASE = './api/command'; // resolves to /<repo>/api/command on GitHub Pages
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js?v=3', { scope: './' });
-      navigator.serviceWorker.ready.then(r => console.log('SW scope:', r.scope));
+<script>
+  const terminal = document.getElementById('terminal');
+  const input = document.getElementById('commandInput');
+
+  // Works for user pages (/) and project pages (/YourRepo/)
+  const BASE = window.location.pathname
+    .replace(/\/index\.html?$/, '')
+    .replace(/\/$/, ''); // "" or "/YourRepo"
+
+  const API_BASE = `${BASE}/api/command`; // e.g. "/YourRepo/api/command"
+
+  // Register SW with explicit scope & cache-busting query
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(`${BASE}/service-worker.js?v=4`, { scope: `${BASE}/` })
+      .then(r => console.log('SW registered:', r.scope))
+      .catch(e => console.error('SW register failed:', e));
+  }
+
+  const print = (text) => {
+    terminal.innerHTML += `\n${text}`;
+    terminal.scrollTop = terminal.scrollHeight;
+  };
+
+  async function handleCommand(cmd) {
+    if (!cmd) return;
+    print(`> ${cmd}`);
+    const [base, ...args] = cmd.split(/\s+/);
+
+    if (base === 'clear') { terminal.innerHTML = ''; return; }
+
+    let url = `${API_BASE}/${base}`;
+    if (base === 'ascii' && args.length) url += `?text=${encodeURIComponent(args.join(' '))}`;
+
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`${res.status}`);
+      const data = await res.json();
+      (data.response || []).forEach(line => print(line));
+    } catch (err) {
+      print('[error] Unable to reach backend or invalid command.');
+      console.error('Fetch failed:', url, err);
     }
+  }
 
-    const print = (text) => {
-      terminal.innerHTML += `\n${text}`;
-      terminal.scrollTop = terminal.scrollHeight;
-    };
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const cmd = input.value.trim();
+      input.value = '';
+      handleCommand(cmd);
+    }
+  });
 
-    const handleCommand = async (cmd) => {
-      if (!cmd) return;
-      print(`> ${cmd}`);
-      const [base, ...args] = cmd.split(' ');
-
-      if (base === 'clear') {
-        terminal.innerHTML = '';
-        return;
-      }
-
-      let url = `${API_BASE}/${base}`;
-      if (base === 'ascii' && args.length) {
-        url += `?text=${encodeURIComponent(args.join(' '))}`;
-      }
-
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Bad response');
-        const data = await res.json();
-        data.response.forEach(line => print(line));
-      } catch (err) {
-        print('[error] Unable to reach backend or invalid command.');
-      }
-    };
-
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const cmd = input.value.trim();
-        input.value = '';
-        handleCommand(cmd);
-      }
-    });
-
-    print('Welcome to Viepertech Mock Hacker Terminal! Type "help" to begin.');
-  </script>
+  print('Welcome to Viepertech Mock Hacker Terminal! Type "help" to begin.');
+</script>
 </body>
 </html>
