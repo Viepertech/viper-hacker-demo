@@ -22,7 +22,6 @@ self.addEventListener('fetch', (event) => {
     try {
       if (path === '/api/command/help')        return json(self.handleHelp());
       if (path === '/api/command/ping')        return json(self.handlePing());
-      if (path === '/api/command/fortune')     return json(self.handleFortune());
       if (path === '/api/command/ascii')       return json(await self.handleAscii(url.searchParams.get('text')));
       if (path === '/api/command/whoami')      return json(self.handleWhoami());
       return json({ error: 'Not found' }, 404);
